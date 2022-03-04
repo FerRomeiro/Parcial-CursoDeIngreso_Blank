@@ -1,1 +1,1 @@
-# SIMULACRO-JULIO-2021
+# Parcial Blanco Curso Ingreso
