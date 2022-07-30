@@ -1,3 +1,310 @@
+/*
+ALUMNO: FERNANDO ROMERO MONTERO
+DIV J
+
+Realizar el algoritmo que permita 
+el ingreso por prompt de las notas 
+(validar entre 0 y 10) , 
+el sexo (validar el sexo “f” o “m”) de 5 alumnos,
+el nombre e informar por alert:
+a) El promedio de las notas totales.
+b) La nota más baja , el nombre y  el sexo de esa persona.
+c) La cantidad de varones que su nota haya sido mayor o igual a 6.
+d) la nota de la primer mujer ingresada y su nombre.
+e) cantidad de aprobados de cada sexo (mas de 5)
+f) el sexo que mas desaprobo
+g) el promedio de notas de los aprobados
+h) el promedio de notas de las mujeres 
+*/
+
+/*
+se pide la altura , 
+la edad y 
+la estacion del año en la que nacio(invierno,verano , otoño, verano)
+
+
+i) la nota y nombre de la persona mas alta
+j) de los nacidos en otoño el primer varon
+k) de los adolescente el nombre del mas bajo en altura
+L) la estacion del año que mas alumnos nacieron
+M) el sexo , nombre, edad y altura del primer aprobado
+*/
+
+
+
+function mostrar(){
+	
+
+	let notas;
+	let sexo;
+	let nombre;
+	let respuesta = 0;
+	let altura;
+	let edad;
+	let estacionAño;
+
+
+	let notaTotales = 0;
+	let promedioNotasTotales;
+
+	let notaMasBaja;
+	let nombreNotaMasBaja;
+	let sexoNotaMasBaja;
+
+	let cantidadVMayorSeis = 0;
+
+	let nombrePrimerMujer;
+	let banderaPrimerMujer = 0;
+	let notaPrimerMujer;
+
+	let cantidadAprobadosF = 0;
+	let cantidadAprobadosM = 0;
+
+	let sexoMasDesaproboM = 0;
+	let sexoMasDesaproboF = 0;
+	let mensaje;
+
+	let promedioNotasAprobados;
+	let acumuladorNotasAprobados = 0;
+	let acumuladorAlumnosAprobados = 0;
+
+	let promedioNotasMujeres;
+	let acumuladorPromedioNotasMujeres = 0;
+	let cantidadMujeresNotasPromedio = 0;
+
+	let notaPersonaMasAlta;
+	let nombrePersonaMasAlta;
+	let banderaPersonaMasAlta;
+	let personaMasAlta;
+
+	let nombrePrimerVaronOtoño;
+	let banderaPrimerVaronOtoño = 0;
+
+	let alturaMasBaja;
+	let nombreAlturaMasBaja;
+
+	let estacionAñoOtoño = 0;
+	let estacionAñoVerano = 0;
+	let estacionAñoInvierno = 0;
+	let estacionDelAñoMasNacieron;
+
+	let sexoPrimerAprobado;
+	let nombrePrimerAprobado;
+	let edadPrimerAprobado;
+	let alturaPrimerAprobado;
+	let banderaPrimerAprobado = 0;
+
+
+
+
+	
+
+	while(respuesta<5){
+
+		nombre=prompt('INGRESE NOMBRE');
+
+		sexo=prompt('INGRESE SEXO');
+		while(sexo!='f' && sexo!='m'){
+			sexo=prompt('ERROR');
+		}
+
+		altura=prompt('INGRESE ALTURA');
+		altura=parseInt(altura);
+
+		edad=prompt('INGRESE EDAD');
+		edad=parseInt(edad);
+
+		estacionAño=prompt('INGRESE ESTACION DE AÑO QUE NACIO');
+		while(estacionAño!='invierno' && estacionAño!='verano' && estacionAño!='otoño' ){
+			estacionAño=prompt('ERROR');
+		}
+
+		notas=prompt('INGRESE NOTA');
+		notas=parseInt(notas);
+		while(notas<0 || notas>10){
+			notas=prompt('error');
+			notas=parseInt(notas);
+		}
+
+		//a) El promedio de las notas totales.
+			if(notas<11){
+			  notaTotales = notaTotales + notas;
+			}
+
+		//b) La nota más baja , el nombre y  el sexo de esa persona.
+
+		if(notas<notaMasBaja || respuesta == 0){
+			notaMasBaja = notas;
+			nombreNotaMasBaja = nombre;
+			sexoNotaMasBaja = sexo;
+		}
+
+		//c) La cantidad de varones que su nota haya sido mayor o igual a 6.
+		if(notas>=6 && sexo=='m'){
+		   cantidadVMayorSeis = cantidadVMayorSeis + 1;	
+		}
+
+		//d) la nota de la primer mujer ingresada y su nombre.
+		if(sexo=='f' && banderaPrimerMujer==0){
+		   notaPrimerMujer = notas;
+		   nombrePrimerMujer = nombre;
+		   banderaPrimerMujer = 1;
+		}
+
+		//e) cantidad de aprobados de cada sexo (mas de 5)
+
+		if(sexo=='f' && notas>5)
+			cantidadAprobadosF = cantidadAprobadosF + 1;
+		else{
+			if(sexo=='m' && notas>5){
+			   cantidadAprobadosM = cantidadAprobadosM + 1;
+			}
+		}
+		//f) el sexo que mas desaprobo
+		if(sexo=='f' && notas<6){
+		   sexoMasDesaproboF = sexoMasDesaproboF + 1;
+		}
+		else{
+			if(sexo=='m' && notas<6){
+			   sexoMasDesaproboM = sexoMasDesaproboM + 1;
+			}
+		}
+
+		if(sexoMasDesaproboF>sexoMasDesaproboM){
+		   mensaje='FEMENINO';
+		}
+		else{
+			if(sexoMasDesaproboM>sexoMasDesaproboF){
+			   mensaje='MASCULINO';
+			}
+		}
+
+		//g) el promedio de notas de los aprobados
+		if(notas>5){
+		   acumuladorNotasAprobados = acumuladorNotasAprobados + notas;
+		   acumuladorAlumnosAprobados = acumuladorAlumnosAprobados + 1;
+		}
+		//h) el promedio de notas de las mujeres 
+		if(sexo=='f'){
+		   acumuladorPromedioNotasMujeres = acumuladorPromedioNotasMujeres + notas;
+		   cantidadMujeresNotasPromedio = cantidadMujeresNotasPromedio + 1;
+		}
+		//i) la nota y nombre de la persona mas alta
+		if(altura>personaMasAlta || banderaPersonaMasAlta == 0){
+		   notaPersonaMasAlta = notas;
+		   nombrePersonaMasAlta = nombre;
+		}
+		//j) de los nacidos en otoño el primer varon nombre
+		if(banderaPrimerVaronOtoño == 0 ){
+			if(estacionAño=='otoño' && sexo=='m'){
+		       nombrePrimerVaronOtoño = nombre;
+		       banderaPrimerVaronOtoño = 1;
+			}
+		}
+
+		//k) de los adolescente el nombre del mas bajo en altura
+		if(altura<alturaMasBaja || respuesta == 0){
+		   alturaMasBaja = altura;
+		   nombreAlturaMasBaja = nombre;
+		}
+		//L) la estacion del año que mas alumnos nacieron
+		switch(estacionAño){
+			case 'invierno':
+				estacionAñoInvierno = estacionAñoInvierno + 1;
+				break;
+			case 'otoño':
+				estacionAñoOtoño = estacionAñoOtoño + 1;
+			    break;
+			case 'verano':
+				estacionAñoVerano = estacionAñoVerano + 1;
+				break;
+		}
+		/* // SIEMPRE AFUERA DEL BUCLE NUNCA ADENTRO PORQUE SINO PREGUNTAS CADA QUE ENTRE AL BUCLE Y NO TIENE SENTIDO CON PREGUNTAR UNA SOLA VEZ AL FINAL ES SUFICIENTE
+		if(estacionAñoInvierno>estacionAñoOtoño && estacionAñoInvierno>estacionAñoVerano){
+		   estacionDelAñoMasNacieron = 'NACIERON MAS EN INVIERNO';
+		}
+		else{
+			if(estacionAñoVerano>estacionAñoInvierno && estacionAñoVerano>estacionAñoOtoño){
+			   estacionDelAñoMasNacieron = 'NACIERON MAS EN VERANO';
+			}
+			else{
+				if(estacionAñoOtoño>estacionAñoInvierno && estacionAñoOtoño>estacionAñoVerano){
+				   estacionDelAñoMasNacieron = 'NACIERON MAS EN OTOÑO';
+				}
+			}
+		}
+		*/ 
+
+		//M) el sexo , nombre, edad y altura del primer aprobado
+		if(banderaPrimerAprobado == 0){
+			if(notas>5){
+			sexoPrimerAprobado = sexo;
+			nombrePrimerAprobado = nombre;
+			edadPrimerAprobado = edad;
+			alturaPrimerAprobado = altura;
+			banderaPrimerAprobado = 1;
+			}
+		}
+
+
+		respuesta=respuesta+1;
+	}
+	
+	if(estacionAñoInvierno>estacionAñoOtoño && estacionAñoInvierno>estacionAñoVerano){
+		estacionDelAñoMasNacieron = 'INVIERNO';
+	 }
+	 else{
+		 if(estacionAñoVerano>estacionAñoInvierno && estacionAñoVerano>estacionAñoOtoño){
+			estacionDelAñoMasNacieron = 'VERANO';
+		 }
+		 else{
+			 if(estacionAñoOtoño>estacionAñoInvierno && estacionAñoOtoño>estacionAñoVerano){
+				estacionDelAñoMasNacieron = 'OTOÑO';
+			 }
+		 }
+	 }
+
+	
+	promedioNotasAprobados = (acumuladorAlumnosAprobados/acumuladorAlumnosAprobados);
+	if(cantidadMujeresNotasPromedio>0){
+	promedioNotasMujeres = (acumuladorPromedioNotasMujeres/cantidadMujeresNotasPromedio);
+	}
+	notaTotales = (notaTotales/5);
+
+
+
+	document.write('a) promedio notas totales ' + notaTotales + 'b) nota mas baja:' + notaMasBaja + ' nombre nota mas baja: ' + nombreNotaMasBaja + ' sexo nota mas baja: ' + sexoNotaMasBaja + ' c)La cantidad de varones que su nota haya sido mayor o igual a 6: ' + cantidadVMayorSeis + ' d) la nota de la primer mujer ingresada y su nombre: ' + notaPrimerMujer + ',' + nombrePrimerMujer + ' e) cantidad de aprobados de cada sexo (mas de 5) F ' + cantidadAprobadosF + ' cantidad aprobados M ' + cantidadAprobadosM + ' f) el sexo que mas desaprobo ' + mensaje + ' h) promedio notas mujeres '+ acumuladorPromedioNotasMujeres + ' i) la nota y nombre de la persona mas alta ' + notaPersonaMasAlta + ' , ' + nombrePersonaMasAlta + 'j) de los nacidos en otoño el primer varon nombre ' + nombrePrimerVaronOtoño + ' k) de los adolescente el nombre del mas bajo en altura ' + nombreAlturaMasBaja + ' L) la estacion del año que mas alumnos nacieron ' + estacionDelAñoMasNacieron + ' M) el sexo , nombre, edad y altura del primer aprobado ' + sexoPrimerAprobado + ' , ' + nombrePrimerAprobado + ' , ' + alturaPrimerAprobado + '<br>');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*Ejercicio 3
 ALUMNO: FERNANDO ROMERO MONTERO
 DIV: J
@@ -19,7 +326,7 @@ E) informar el porcentaje de cartas de cada tipo de rareza (ejemplo 25% de carta
 25% rarisimas 25% legendarias)
 
 */
-
+/*
 function mostrar(){
 
 	let nombre;
@@ -190,7 +497,7 @@ function mostrar(){
 	document.write('EL PORCENTAJE TOTAL DE LAS CARTAS ES DE ' + porcentajeTotal + '% CON UN PORCENTAJES DE legendarias '+ porcentajeL + '% DE RARAS ' + porcentajeR + '% DE RARISIMAS ' + porcentajeRari + '% Y DE COMUN ' + porcentajeC +'%' + '<br>');
 }
 
-
+*/
 
 
 
