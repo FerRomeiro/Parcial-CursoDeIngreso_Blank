@@ -1,3 +1,22 @@
+3)Nos ingresan una cantidad indeterminada de ventas realizadas por las distintas sucursales de una Mega Tienda Polirubro, validando los datos ingresados:
+
+            nombre del cliente, 
+
+            sucursal( “CABA”, “BS.AS.” o “INTERIOR”), 
+
+            tipo(“GRANDE”,”MEDIANA”,“PEQUEÑA”),
+
+            monto de venta en Pesos.
+
+Informar:
+
+a)El nombre del cliente al que se le vendió menos.
+
+b)El promedio del monto de venta de las sucursales del tipo “PEQUEÑA”.
+
+c)La sucursal con mas cantidad de ventas.
+
+Pedir datos por prompt y mostrar por document.write
 /*
 buenas genteee
 Como me pidieron ayer, les hice un ejercicio para que puedan seguir practicando, pero con una dificultad un poco especial... 🙂

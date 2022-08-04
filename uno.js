@@ -1,3 +1,652 @@
+/*Ejercicio 2
+Una casa de computación debe realizar el ingreso de los datos de los productos que tiene a la venta, de acuerdo al 
+siguiente detalle:
+PC (“DESKTOP” o “LAPTOP”)
+Marca (“DELL”, “HP”, “ACER”)
+Modelo
+Precio (No puede ser menor a 100.000 pesos)
+Informar:
+a) El precio de la PC más barata.
+b) La cantidad total de PC marca HP del tipo DESKTOP.
+c) El promedio del precio de las PC marca ACER.
+d) Porcentaje de computadoras de cada marca.
+e) De las computadoras DESKTOP de marca DELL, el modelo de la mas cara.
+Pedir datos por prompt y mostrar la información por document.write.
+
+Anioska Reyes ejercicio 2*/
+
+function mostrar()
+{
+   let pregunta;
+   let mensaje;
+   let pcIngresada;
+   let marcaIngresada;
+   let modeloIngresado;
+   let precioIngresado;
+   let banderaMasBarato;
+   let precioMasBarato;
+   let contadorDesktopHp;
+   let acumuladorPrecioAcer;
+   let contadorAcer;
+   let promedioPcAcer;
+   let contadorDell;
+   let contador;
+   let porcentajeMarcaDell;
+   let banderaMasCaroDell;
+   let precioMasCaroDell;
+   let modeloMasCaro;
+
+
+   pregunta="si";
+   banderaMasBarato="Inicio";
+   contadorDesktopHp=0;
+   acumuladorPrecioAcer=0;
+   contadorAcer=0;
+   contadorDell=0;
+   contador=0;
+   banderaMasCaroDell="Inicio";
+
+   while(pregunta=="si")
+  {
+      pcIngresada=prompt("Ingrese la pc: DESKTOP / LAPTOP");
+      while(pcIngresada!= "DESKTOP" && pcIngresada!= "LAPTOP")
+      {
+         pcIngresada=prompt("Erro, Ingrese la pc: DESKTOP / LAPTOP");
+      }
+
+      marcaIngresada=prompt("Ingrese la marca: “DELL”, “HP”, “ACER”");
+      while(marcaIngresada!= "DELL" && marcaIngresada!= "HP" && marcaIngresada!= "ACER" )
+      {
+         marcaIngresada=prompt("Erro,Ingrese la marca: “DELL”, “HP”, “ACER”");
+      }
+
+      modeloIngresado=prompt("Ingrese el modelo");
+
+      precioIngresado=prompt("Ingrese precio  mayor a 100000");
+		precioIngresado=parseInt(precioIngresado);
+		while(precioIngresado<100000 || Number.isNaN(precioIngresado))
+		{
+			precioIngresado=prompt("Error, Ingrese precio mayor a 100000");
+			precioIngresado=parseInt(precioIngresado);
+		}
+      if(precioMasBarato>precioIngresado || banderaMasBarato=="Inicio")
+      {
+         precioMasBarato=precioIngresado;
+         banderaMasBarato="Cierre";
+      }
+      switch(marcaIngresada)
+      {
+         case "HP":
+            if(pcIngresada=="DESKTOP")
+            {
+               contadorDesktopHp++;
+            }
+         break;
+         case "ACER":
+            acumuladorPrecioAcer=acumuladorPrecioAcer+precioIngresado;
+            contadorAcer++;
+         break;
+
+         case "DELL" :
+            contadorDell++;
+            if(pcIngresada=="DESKTOP")
+            {
+               if(precioMasCaroDell<precioIngresado ||banderaMasCaroDell=="Inicio")
+               {
+                  precioMasCaroDell=precioIngresado;
+                  modeloMasCaro=modeloIngresado;
+                  banderaMasCaroDell="Cierre";
+
+               }
+             }
+         break;
+      }
+  
+
+   contador++;
+   pregunta=prompt("¿Quiere ingresar otra venta? si/no");
+  }
+
+  if(contadorAcer>0)
+  {
+   promedioPcAcer=acumuladorPrecioAcer/contadorAcer
+  }
+
+  porcentajeMarcaDell= contadorDell/contador;
+
+  
+
+  mensaje="a) El precio de la PC más barata." +precioMasBarato
+   +"<br>"+"b) La cantidad total de PC marca HP del tipo DESKTOP."+contadorDesktopHp
+   +"<br>"+"c) El promedio del precio de las PC marca ACER."+promedioPcAcer
+   +"<br>"+"d) Porcentaje de computadoras de cada marca."+porcentajeMarcaDell
+   +"<br>"+"e) De las computadoras DESKTOP de marca DELL, el modelo de la mas cara."+modeloMasCaro;
+
+
+   document.write(mensaje);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************************************************************************
+Ejercicio 3
+
+Parador Atalaya
+
+Para la nueva sucursal de Atalaya a la vuelta de UTN Avellaneda,
+ es necesario llevar un registro 
+de la venta diaria de cafés, medialunas y churros.
+
+Para eso, al momento de cada venta, se debe ingresar:
+
+Nombre del cliente a retirar
+Tipo (Café / Medialunas /Churros) 
+Cantidad.
+
+El precio por unidad de cada producto es:
+
+Café $100.
+Medialunas $60.
+Churros $50.
+
+
+Si compra 2 docenas de Medialunas o Churros tendrá un 30% de descuento.
+Si compra 1 docena Medialunas o Churros tendrá un 20% de descuento.
+Si compra 10 Medialunas o Churros tendrá un 10% de descuento.
+Si compra 5 Medialunas o Churros o un café tendrá un 5% de descuento.
+
+Informes:
+
+a) Cuantas Medialunas se compraron durante toda la jornada.
+b) Cuál fue el producto con más unidades vendidas.
+c) Nombre del cliente, y tipo de producto con mayor cantidad de compras
+d) En caso de haber excedido el monto de $1300 sumarle un 20% de impuestos.
+e) Informar cuál fue el producto menos vendido para poder sacarlo de la venta.
+
+
+*******************************************************************************/
+function mostrar(){
+
+	let respuesta=true;
+	let nombre;
+	let tipo;
+	let cantidad;
+	let descuento;
+	let precioCafe = 100;
+	let precioMedialuna = 60;
+	let precioChurro = 50;
+	let precioTotal;
+	let precioTotalC;
+	let precioTotalChu;
+	let precioTotalM;
+
+	let precioConDescuentoCafe;
+	let precioConDescuentoChurros;
+	let precioCondescuentoMedialuna;
+
+
+	let contadorMedialunas = 0;
+
+	let nombreProductoMasUnidadesVendidas;
+	let cantidadConMasUnidades;
+	let banderaMasUnidadesVendidas = 0;
+
+	let nombreClienteMayorCantidadCompras;
+	let tipoProductoConMasCompras;
+	let mayorCantidadCompras;
+	let banderaCantidadCompras = 0;
+
+	let productoMenosVendido;
+	let TipoproductoMenosVendidoPrecio;
+	let banderaDelProductoMenosVendido = 0;
+	
+
+
+	while(respuesta==true){
+
+		nombre=prompt('ingrese nombre');
+
+		tipo=prompt('ingrese tipo');
+		while(tipo!='medialunas' && tipo!='cafes' && tipo!='churros'){
+			tipo=prompt('error');
+		}
+
+		cantidad=prompt('ingrese cantidad');
+		cantidad=parseInt(cantidad);
+
+		switch(tipo){
+			case 'churros':
+			case 'medialunas':
+				  if(cantidad==24){
+					descuento=30;
+					
+				  }
+				  else{
+					if(cantidad==12){
+					   descuento=20;
+					}
+					else{
+						if(cantidad==10){
+							descuento=10;
+						}
+						else{
+							if(cantidad==5){
+								descuento=5;
+							}
+						}						
+					}
+				  } 
+				break;
+			case 'cafes':
+				if(cantidad==1){
+					descuento=5;
+				}
+				break;
+		}
+
+		//a) Cuantas Medialunas se compraron durante toda la jornada.
+		if(tipo=='medialunas'){
+			contadorMedialunas = contadorMedialunas + 1;
+		}
+		//b) Cuál fue el producto con más unidades vendidas.
+		if(cantidad>cantidadConMasUnidades || banderaMasUnidadesVendidas == 0){
+			cantidadConMasUnidades = cantidad;
+			nombreProductoMasUnidadesVendidas = tipo;
+			banderaMasUnidadesVendidas = 1;
+		}
+		//c) Nombre del cliente, y tipo de producto con mayor cantidad de compras
+		if(cantidad>mayorCantidadCompras || banderaCantidadCompras == 0){
+			mayorCantidadCompras = cantidad;
+			nombreClienteMayorCantidadCompras = nombre;
+			tipoProductoConMasCompras = tipo;
+			banderaCantidadCompras = 1;
+		}
+		//d) En caso de haber excedido el monto de $1300 sumarle un 20% de impuestos.
+
+		
+		//e) Informar cuál fue el producto menos vendido para poder sacarlo de la venta.
+		if(cantidad<productoMenosVendido || banderaDelProductoMenosVendido == 0){
+			productoMenosVendido=cantidad;
+			TipoproductoMenosVendidoPrecio = tipo;
+			banderaDelProductoMenosVendido = 1;
+		}
+
+
+
+		respuesta=confirm('OTRO CLIENTE?? ');
+	}
+
+	if(descuento>0){
+	precioCondescuentoMedialuna=((cantidad*precioMedialuna)*descuento)/100;
+	precioConDescuentoChurros=((cantidad*precioChurro)*descuento)/100;
+	precioConDescuentoCafe=((cantidad*precioCafe)*descuento)/100;
+	}else{
+		precioTotalC=(precioCafe*cantidad);
+		precioTotalChu=(precioCafe*cantidad);
+		precioTotalM=(precioMedialuna*cantidad);
+	}
+
+
+
+
+
+
+	
+
+	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************************************************************************
+ * ALUMNO: CARLOS FERNANDO ROMERO MONTERO
+ * DIV: J
+ * 
+ * 
+Ejercicio 2
+
+Una casa de computación debe realizar el ingreso de los datos 
+de los productos que tiene a la venta, de acuerdo al 
+siguiente detalle:
+PC (“DESKTOP” o “LAPTOP”)
+Marca (“DELL”, “HP”, “ACER”)
+Modelo
+Precio (No puede ser menor a 100.000 pesos)
+Informar:
+a) El precio de la PC más barata.
+b) La cantidad total de PC marca HP del tipo DESKTOP.
+c) El promedio del precio de las PC marca ACER.
+d) Porcentaje de computadoras de cada marca.
+e) De las computadoras DESKTOP de marca DELL, el modelo de la mas cara.
+Pedir datos por prompt y mostrar la información por document.write.
+
+
+*******************************************************************************/
+/*
+function mostrar(){
+
+	let pc;
+	let marca;
+	let modelo;
+	let precio;
+	let respuesta=true;
+
+	let precioPcBarata;
+	let banderaPcBarata = 0;
+
+	let cantidadDesktopPc = 0;
+
+	let promedioPrecioPcAcer;
+	let acumuladorPrecioAcer = 0;
+	let cantidadAcer = 0;
+
+	let contadorDell = 0;
+	let contadorHp = 0;
+	let contadorAcer = 0;
+	let porcentajeDell;
+	let porcentajeHp;
+	let porcentajeAcer;
+	let totaldha;
+
+	let precioMasCaraDmD;
+	let banderaDmD = 0;
+	let modeloMasCaraDmD;
+
+
+
+
+
+
+
+	while(respuesta==true){
+		pc=prompt('ingrese pc');
+		while(pc!='desktop' && pc!='laptop'){
+			pc=prompt('error');
+		}
+
+		marca=prompt('ingrese marca');
+		while(marca!='dell' && marca!='hp' && marca!='acer'){
+			marca=prompt('error');
+		}
+
+		modelo=prompt('ingrese modelo');
+
+		precio=prompt('ingrese precio');
+		precio=parseInt(precio);
+		while(precio<100000){
+			precio=prompt('error');
+			precio=parseInt(precio);
+		}
+
+
+
+
+
+		//a) El precio de la PC más barata.
+
+		if(precio<precioPcBarata || banderaPcBarata == 0){
+			precioPcBarata=precio;
+			banderaPcBarata= 1;
+		}
+
+		//b) La cantidad total de PC marca HP del tipo DESKTOP.
+
+		if(pc=="desktop" && marca=='hp'){
+			cantidadDesktopPc = cantidadDesktopPc + 1;
+		}
+
+		//c) El promedio del precio de las PC marca ACER.
+		
+		if(marca=='acer'){
+			acumuladorPrecioAcer = acumuladorPrecioAcer + precio;
+			cantidadAcer = cantidadAcer + 1;
+		}
+
+		//d) Porcentaje de computadoras de cada marca.
+
+		switch(marca){
+			case 'acer':
+				contadorAcer = contadorAcer  + 1;
+				break;
+			case 'dell':
+				contadorDell = contadorDell + 1;
+				break;
+			case 'hp':
+				contadorHp = contadorHp + 1;
+			break;
+		}
+
+		//e) De las computadoras DESKTOP de marca DELL, el modelo de la mas cara.
+		if(pc=='desktop' && marca=='dell'){
+			if(precio>precioMasCaraDmD || banderaDmD == 0){
+				precioMasCaraDmD=precio;
+				modeloMasCaraDmD = modelo;
+				banderaDmD = 1;
+			}
+		}
+
+
+		respuesta=confirm('otros datos ??? ');
+	}
+
+
+
+	promedioPrecioPcAcer = (acumuladorPrecioAcer/cantidadAcer);
+	totaldha = (contadorAcer+contadorDell+contadorHp);
+	porcentajeAcer=(contadorAcer*totaldha)/100;
+	porcentajeDell=(contadorDell*totaldha)/100;
+	porcentajeHp=(contadorHp*totaldha)/100;
+
+	document.write('a) el precio de la pc mas barata es ' + precioPcBarata + ' b) cantidad pc marca hp y tipo deskopt ' + cantidadDesktopPc + ' c) promedio pc marca acer ' + promedioPrecioPcAcer + ' d) porcentajes de cada marca es HP: ' + porcentajeHp + ' DELL: ' + porcentajeDell + ' ACER: ' + porcentajeAcer + 'e) De las computadoras DESKTOP de marca DELL, el modelo de la mas cara.' + modeloMasCaraDmD  + '<br>' );
+
+
+}
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************************************************************************
+Ejercicio 1
+
+De los 50 participantes del torneo de TETRIS, se deben ingresar 
+los datos de acuerdo a lo siguiente:
+Nombre
+Genero (“F”, “M”, "X")
+Edad (validar de manera coherente)
+Score (validar de manera coherente)
+Informar:
+a) La cantidad de participantes mayores de edad.
+b) El promedio de edad de todos los participantes femeninos.
+c) El nombre del participante (cualquiera sea el genero) con mejor score.
+Pedir datos por prompt y mostrar la información por document.write.
+
+
+
+*******************************************************************************/
+/*
+function mostrar(){
+
+		let contador = 0;
+		let genero;
+		let edad;
+		let score;
+		let nombre;
+
+		let cantidadParticipantesMayoresEdad = 0;
+
+		let promedioEdadParticipantesF;
+		let cantidadParticipantesF = 0;
+		let acumuladorEdadF = 0;
+
+		let nombreMejorScore;
+		let banderaScore = 0;
+		let MejorScore;
+
+
+	while(contador<50){
+
+		nombre=prompt('ingrese nombre');
+
+
+		genero=prompt('ingrese genero');
+		while(genero!='m' && genero!='f' && genero!='x'){
+			genero=prompt('error');
+		}
+
+		edad=prompt('ingrese edad');
+		edad=parseInt(edad);
+		while(edad<0 || edad>90){
+			edad=prompt('error');
+			edad=parseInt(edad);
+		}
+
+		score=prompt('ingrese scrore');
+		score=parseInt(score);
+		while(score<0){
+			score=prompt('error');
+			score=parseInt(score);
+		}
+
+	//a) La cantidad de participantes mayores de edad.
+	if(edad>17){
+		cantidadParticipantesMayoresEdad = cantidadParticipantesMayoresEdad+1;
+	}
+
+	//b) El promedio de edad de todos los participantes femeninos.
+
+	if(genero=='f'){
+
+		cantidadParticipantesF =cantidadParticipantesF +1
+		acumuladorEdadF = acumuladorEdadF + edad;		
+	}
+
+	//c) El nombre del participante (cualquiera sea el genero) con mejor score.
+    //Pedir datos por prompt y mostrar la información por document.write.
+	
+	if(score>MejorScore || banderaScore == 0){
+		MejorScore=score;
+		nombreMejorScore=nombre;
+	}
+
+
+
+
+
+		contador=contador+1;
+	}
+
+	
+	promedioEdadParticipantesF = acumuladorEdadF/cantidadParticipantesF;
+	
+
+
+	document.write('a) cantidad de participantes mayores de edad ' + cantidadParticipantesMayoresEdad + ' b) promedio de edad participantes femeninos: ' + promedioEdadParticipantesF + ' c) mejor score es de ' + nombreMejorScore + '<br>');
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 ALUMNO: FERNANDO ROMERO MONTERO
 DIV J
@@ -31,7 +680,7 @@ M) el sexo , nombre, edad y altura del primer aprobado
 */
 
 
-
+/*
 function mostrar(){
 	
 
@@ -234,7 +883,7 @@ function mostrar(){
 			}
 		}
 		*/ 
-
+/*
 		//M) el sexo , nombre, edad y altura del primer aprobado
 		if(banderaPrimerAprobado == 0){
 			if(notas>5){
@@ -280,924 +929,11 @@ function mostrar(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Ejercicio 3
-ALUMNO: FERNANDO ROMERO MONTERO
-DIV: J
-
-
-Un aficionado a las cartas coleccionables desea organizar su coleccion, 
-para esto necesita 
-ingresar en un programa:
-nombre, tipo (validar monstruo, arma, magica, trampa), rareza validar
- (comun, rara, rarisima,
-legendaria), precio (validar entre 250$ y 5000$) y cantidad del mismo tipo de carta 
-(no menor a 1), 
-dejar ingresar hasta que el usuario quiera e informar lo siguiente:
-A) de los distintos tipos de cartas, la cantidad total de cada tipo
-B) el nombre de la carta mas repetida de cada tipo
-C) de las cartas rarisimas y legendarias, la que mas precio tiene y su nombre
-D) el valor de la coleccion entera
-E) informar el porcentaje de cartas de cada tipo de rareza (ejemplo 25% de cartas comunes, 25% raras, 
-25% rarisimas 25% legendarias)
-
-*/
-/*
-function mostrar(){
-
-	let nombre;
-	let tipo;
-	let rareza;
-	let precio;
-	let cantidad;
-	let respuesta=true;
-
-	let  contadorMonstruos = 0;
-	let contadorArmas = 0;
-	let contadorMagicas = 0;
-	let contadorTrampas = 0;
-
-	let contador = 0;
-
-	let precioMayorR = 0;
-	let precioMayorL = 0;
-	let nombreL;
-	let nombreR;
-	let banderaL = 0;
-	let banderaR = 0;
-
-	let valorColeccionEntera = 0;
-
-	let contadorComun = 0;
-	let contadorRara = 0;
-	let contadorRarisima = 0;
-	let contadorLegendaria = 0;
-	let porcentajeTotal;
-	let porcentajeC;
-	let porcentajeL;
-	let porcentajeRari;
-	let porcentajeR;
-	let mensaje;
-
-
-
-
-	while(respuesta==true){
-		  
-		nombre=prompt('INGRESE NOMBRE');
-
-		tipo=prompt('INGRESE TIPO');
-		while(tipo!='monstruo' && tipo!='arma' && tipo!='magica' && tipo!='trampa'){
-			 tipo=prompt('ERROR');
-		}
-
-		rareza=prompt('INGRESE RAREZA');
-		while(rareza!='comun' && rareza!='rara' && rareza!='rarisima' && rareza!= 'legendaria'){
-			  rareza=prompt('ERROR');
-		}
-
-		precio=prompt('INGRESE PRECIO');
-		precio=parseInt(precio);
-
-		while(precio<250 || precio>5000){
-			  precio=prompt('ERROR');
-			  precio=parseInt(precio);
-		}
-
-		cantidad=prompt('INGRESE CANTIDAD');
-		cantidad=parseInt(cantidad);
-
-		while(cantidad<1){
-			cantidad=prompt('error');
-			cantidad=parseInt(cantidad);
-		}
-
-		//A) de los distintos tipos de cartas, la cantidad total de cada tipo
-		switch(tipo){
-			case 'arma':
-				contadorArmas =contadorArmas + 1;
-				break;
-			case 'magica':
-				contadorMagicas = contadorMagicas + 1;
-				break;
-			case 'monstruo':
-				contadorMonstruos = contadorMonstruos + 1;
-				break;
-			case 'trampa':
-				contadorTrampas = contadorTrampas + 1;
-				break;
-		}
-
-
-
-
-
-		//C) de las cartas rarisimas y legendarias, la que mas precio tiene y 
-		//su nombre
-
-		switch(rareza){
-			case 'rarisima':
-				if(banderaR == 0 || precio>precioMayorR){
-			     precioMayorR = precio;
-				 nombreR = nombre;
-				 banderaR = 1;
-				}
-				 break;
-		    case 'legendaria':
-				if(banderaL == 0 || precio>precioMayorL){
-				precioMayorL = precio;
-				nombreL = nombre;
-				banderaR = 1;
-				}
-				break;
-		}
-		
-		if(precioMayorL>precioMayorR){
-		   mensaje = ('la que mas precio tiene es ' + precioMayorL + ' y su noombre es ' + nombreL + '<br>')
-		}
-		else{
-			if(precioMayorR>precioMayorL){
-				mensaje= ('la que mas precio tiene es ' + precioMayorR + ' y su nombre es ' + nombreR + '<br>');
-			}
-		}
-
-
-		//D) el valor de la coleccion entera
-		if(precio>249 && precio<5000){
-		   valorColeccionEntera = valorColeccionEntera + precio;
-		}
-
-		//E) informar el porcentaje de cartas de cada tipo de rarez
-		// (ejemplo 25% de cartas comunes, 25% raras, 
-        //25% rarisimas 25% legendarias)
-
-		if(rareza=='comun'){
-			contadorComun = contadorComun + 1;
-		}
-		else{
-			if(rareza=='legendaria'){
-			   contadorLegendaria = contadorLegendaria + 1;
-			}
-			else{
-				if(rareza=='rara'){
-				   contadorRara = contadorRara + 1;
-				}
-				else{
-					if(rareza=='rarisima'){
-						contadorRarisima = contadorRarisima + 1;
-					}
-				}
-			}
-		}
-
-		
-
-
-
-
-
-
-		respuesta=confirm('OTRA CARTA?');
-	}
-
-	porcentajeTotal = contadorLegendaria + contadorRara + contadorRarisima + contadorComun;
-	porcentajeL = (contadorLegendaria*100)/porcentajeTotal;
-	porcentajeR = (contadorRara*100)/porcentajeTotal;
-	porcentajeRari=(contadorRarisima*100)/porcentajeTotal;
-	porcentajeC=(contadorComun*100)/porcentajeTotal;
-
-	document.write('CANTIDAD DE CADA TIPO>>  ARMAS: '+ contadorArmas + ' MONSTRUOS: ' + contadorMonstruos + ' MAGICA: ' + contadorMagicas + ' TRAMPA: ' + contadorTrampas + '<br>');
-	document.write(mensaje);
-	document.write
-	document.write('EL VALOR DE LA COLECCION ENTERA ES ' + valorColeccionEntera + '<br>');
-	document.write('EL PORCENTAJE TOTAL DE LAS CARTAS ES DE ' + porcentajeTotal + '% CON UN PORCENTAJES DE legendarias '+ porcentajeL + '% DE RARAS ' + porcentajeR + '% DE RARISIMAS ' + porcentajeRari + '% Y DE COMUN ' + porcentajeC +'%' + '<br>');
-}
-
 */
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Ejercicio 2
-
-ALUMNO: FERNANDO ROMERO MONTERO
-DIV J
-
-Se pide gestionar los ingresos en pesos de un club de fútbol.
-El equipo tiene ingresos por "ENTRADAS", "INDUMENTARIA", "ACCESORIOS".
-Se solicita Tipo de Ingreso, ya mencionados anteriormente y Valor de Ingreso. 
-(Puede NO EXISTIR ingresos en alguna de las categorías)
-
-A) Ingreso BRUTO del club.
-B) Ingreso NETO del club después de pagar un impuesto del 18% sobre el BRUTO.
-C) Del total de ingresos se sabe que un 35% proviene de los socios, se compran dólares al costo de
-$220c/u con ese monto, informar cuantos dolares se compraron.
-D) Determinar si se recaudó más por INDUMENTARIA o ACCESORIOS. Informando la diferencia del mayor con el menor.
-(Ej: Se recaudó $x más de ACCESORIOS)
-
-
-
-
-*/
-/*
-
-function mostrar(){
-
-	let tipoIngreso;
-	let valorIngreso;
-
-	let valorIngresoTotal = 0;
-
-	let ingresoBruto;
-
-	let dolaresComprados;
-	let valorDelDolar = 220;
-
-	let acumuladorAccesorios = 0;
-	let acumuladorIndumentarias = 0;
-	let diferencia;
-
-	let respuesta=true;
-
-
-
-	while(respuesta==true){
-
-		tipoIngreso=prompt('INGRESE TIPO DE INGRESO');
-		while(tipoIngreso!='entradas' && tipoIngreso!='indumentarias' && tipoIngreso!='accesorios'){
-			  tipoIngreso=prompt('ERROR');
-		}
-		
-		valorIngreso=prompt('INGRESE VALOR DEL INGRESO');
-		valorIngreso=parseInt(valorIngreso);
-
-		while(valorIngreso<0){
-			  valorIngreso=prompt('error');
-			  valorIngreso=parseInt(valorIngreso);
-		}
-
-		if(valorIngreso>0){
-		   valorIngresoTotal = valorIngresoTotal + valorIngreso;
-		}
-
-		switch(tipoIngreso){
-			    case 'accesorios':
-			    acumuladorAccesorios = acumuladorAccesorios + valorIngreso;
-				break;
-			    case 'indumentarias':
-				acumuladorIndumentarias = acumuladorIndumentarias + valorIngreso;
-				break;
-
-
-		}
-
-
-
-		respuesta=confirm('OTRO INGRESO?');
-	}
-
-		if(acumuladorAccesorios>acumuladorIndumentarias){
-		   diferencia=(acumuladorAccesorios-acumuladorIndumentarias);
-		   mensaje = 'accesorios';
-
-		}
-		else{
-			if(acumuladorIndumentarias>acumuladorAccesorios){
-			   diferencia=(acumuladorIndumentarias-acumuladorAccesorios);
-			   mensaje = 'indumentarias';
-			}
-		}
-
-
-
-
-		ingresoBruto = (valorIngresoTotal*18)/100;
-		
-		dolaresComprados = ((valorIngresoTotal*35)/100)*valorDelDolar;
-
-		document.write('EL INGRESO BRUTO ES ' + valorIngresoTotal + '<br>');
-		document.write('VALOR INGRESO BRUTO DESPUES DEL 18% EN IMPUESTOS ' + ingresoBruto + '<br>');
-		document.write('DOLARES COMPREADOS SON ' + dolaresComprados);
-		document.write('SE RECAUDO ' + diferencia + '$' + 'mas de ' + mensaje + '<br>' );
-
-}
-
-
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-ALUMNO: FERNANDO ROMERO  MONTERO
-DIVISION: J
-Ejercicio 1
-
-Se pide cargar la ficha médica para 11 jugadores de fútbol.
-Se solicita Nombre, Edad, Peso(ej: 60.5kg) y Altura(ej: 1.65mt).
-A) Nombre del jugador más joven.
-B) El peso del jugador más alto.
-C) Promedio de altura del equipo.
-D) Promedio de peso del equipo.
-E) Cantidad de jugadores que superen el promedio de altura y de peso del equipo.
-// E) Cantidad de jugadores que superen 1.7 mt y pesen mas de 85 kg.
-*/
-/*
-function mostrar(){
-
-	let nombre;
-	let edad;
-	let peso;
-	let altura;
-	let respuesta = 0;
-
-	let nombreJugadorMasJoven;
-	let jugadorMasJoven;
-	let banderaJugadorMasJoven = 0;
-
-	let jugadorMasAlto;
-	let pesoJugadorMasAlto;
-	let banderaJugadorMasAlto = 0;
-
-	let promedioAlturaEquipo;
-	let totalJugadores = 11;
-	let acumuladorAlturas = 0;
-
-	let promedioPesoEquipo;
-	let acumuladorPeso = 0;
-
-	let cantidadJugadoresSuperanAlturaP = 0;
-	let cantidadJugadoresSuperanPesoP= 0;
-
-	let cantidadJugadoresSuperanMetroS = 0;
-	let cantidadJugadoresSuperanPeso= 0;
-
-
-
-
-	while(respuesta < 11){
-
-		nombre=prompt('ingrese nombre');
-
-		edad=prompt('ingrese edad')
-		edad=parseInt(edad);
-
-		peso=prompt('ingrese peso');
-		peso=parseFloat(peso);
-
-		while(peso<0)
-		     peso=('error');
-			 peso=parseFloat(peso);
-
-		altura=prompt('ingrese altura');
-		altura=parseFloat(altura);
-
-		while(altura<0){
-			altura=prompt('error');
-			altura=parseFloat(altura);
-		}
-
-		if(banderaJugadorMasJoven == 0 || edad<jugadorMasJoven ){
-		   jugadorMasJoven = edad;
-		   nombreJugadorMasJoven = nombre;
-		   banderaJugadorMasJoven = 1;
-		}
-
-		if(banderaJugadorMasAlto == 0 || altura>jugadorMasAlto){
-		   jugadorMasAlto = altura;
-		   pesoJugadorMasAlto = peso;
-		   banderaJugadorMasAlto = 1;
-		}
-
-		if(altura>0){
-		   acumuladorAlturas = acumuladorAlturas + altura;
-		}
-
-		if(peso>0){
-		   acumuladorPeso = acumuladorPeso + peso;
-		}
-
-// E) Cantidad de jugadores que superen 1.7 mt y pesen mas de 85 kg.
-
-		if(altura>1.70 && peso>85){
-			cantidadJugadoresSuperanMetroS = cantidadJugadoresSuperanMetroS + 1;
-			cantidadJugadoresSuperanPeso = cantidadJugadoresSuperanPeso + 1;
-		}
-
-
-		respuesta = respuesta + 1;
-	}
-
-	promedioAlturaEquipo = (acumuladorAlturas/totalJugadores);
-
-	promedioPesoEquipo = (acumuladorPeso/totalJugadores);
-
-	if(altura>promedioAlturaEquipo){
-	   cantidadJugadoresSuperanAlturaP = cantidadJugadoresSuperanAlturaP + 1;
-	}
-
-	if(peso>promedioPesoEquipo){
-	   cantidadJugadoresSuperanPesoP = cantidadJugadoresSuperanPesoP + 1;
-	}
-
-	document.write('CANTIDAD DE JUGADORES QUE SUPERAN 1.7 SON ' + cantidadJugadoresSuperanMetroS + ' Y CANTIDAD DE JUGADORES QUE PESAN MAS 85 KG SON ' + cantidadJugadoresSuperanPeso + '<br>');
-
-	document.write('NOMBRE DEL JUGADOR MAS JOVEN ES ' + nombreJugadorMasJoven + '<br>');
-	document.write('EL PESO DEL JUGADOR MAS ALTO ES ' + pesoJugadorMasAlto + '<br>');
-	document.write('PROMEDIO DE ALTURA DEL EQUIPO: ' + promedioAlturaEquipo + '<br');
-	document.write('PROMEDIO DE PESO DEL EQUIPO: ' + promedioPesoEquipo + '<br');
-	document.write('CANTIDAD DE JUGADORES QUE SUPERAN ' )
-}
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Ejercicio 2
-
-Una librería que se especializa en venta de libros importados desea calcular 
-ciertas métricas en base
-a las ventas de sus productos.
-Se ingresa de cada venta:
-Título del libro
-Género: (ciencia ficción – Drama – Terror)
-Material del libro (rústica – tapa dura)
-Importe (No pueden ser números negativos ni mayor a los 30000)
-Se pide:
-a) El libro más barato de drama con su importe.
-b) Del libro más caro, el título.
-c) Porcentaje de libros de cada género
-d) La cantidad de libros que sean de ciencia ficción y cuesten menos de $700.
-*/
-/*
-function mostrar(){	
-	let genero;
-	let materialLibro;
-	let importe;
-	let respuesta=true;
-	let titulo;
-
-	let libroMasBaratoDrama;
-	let nombreDelLibroMasBarato;
-	let banderaDrama = 0;
-
-	let importeDelMasCaro;
-	let banderaDelMasCaro = 0;
-	let nombreLibroMasCaro;
-
-	let cantidadLibroTotal = 0;
-	let generoDrama = 0;
-	let generoCienciaFiccion = 0;
-	let generoTerror = 0;
-	let porcentajeTerror;
-	let porcentajeDrama;
-	let porcentajeCienciaFiccion;
-
-	let libroCficcionSetesientosP = 0;
-
-	
-
-
-
-	while(respuesta==true){
-
-		titulo=prompt('INGRESE TITULO');
-
-		genero=prompt('INGRESE GENERO');
-		while(genero!='ciencia ficcion' && genero!='drama' && genero!='terror'){
-			  genero=prompt('ERROR');
-		}
-
-		materialLibro=prompt('INGRESE MATERIAL');
-		while(materialLibro!='rustico' && materialLibro!='tapa dura'){
-			  materialLibro=prompt('ERROR');
-		}
-
-		importe=prompt('INGRESE IMPORTE');
-		importe=parseInt(importe);
-		while(importe<0 || importe>3000){
-			  importe=prompt('ERROR');
-			  importe=parseInt(importe);
-		}
-
-		respuesta=confirm('OTRO LIBRO?');
-
-		if(genero=='drama' && importe<libroMasBaratoDrama || banderaDrama == 0){
-		   libroMasBaratoDrama = importe;
-		   nombreDelLibroMasBarato = titulo;
-		   banderaDrama = 1;
-		}
-		
-		if(banderaDelMasCaro == 0 || importe>importeDelMasCaro){
-			nombreLibroMasCaro = titulo;
-			importeDelMasCaro = importe;
-			banderaDelMasCaro = 1;
-		}
-
-		switch(genero){
-			case 'terror':
-			      generoTerror = generoTerror + 1;
-				break;
-			case 'drama':
-				  generoDrama = generoDrama + 1;
-				break;
-			case 'ciencia ficcion':
-				  generoCienciaFiccion = generoCienciaFiccion + 1;
-				  break;
-		}	
-
-		if(genero=='ciencia ficcion' && importe<700){
-			libroCficcionSetesientosP = libroCficcionSetesientosP + 1; 	
-		}
-
-		
-
-
-		
-	}
-
-	cantidadLibroTotal = generoDrama + generoTerror + generoCienciaFiccion;
-	porcentajeCienciaFiccion = (generoCienciaFiccion*100)/cantidadLibroTotal;
-	porcentajeDrama = (generoDrama*100)/cantidadLibroTotal;
-	porcentajeTerror = (generoTerror*100)/cantidadLibroTotal;
-
-
-	document.write('LIBRO MAS BARATO DE DRAMA ' + nombreDelLibroMasBarato + ' CON IMPORTE DE ' + libroMasBaratoDrama + '$' + '<br>');
-	document.write('EL LIBRO MAS CARO ES ' + nombreLibroMasCaro + ' CON IMPORTE DE ' + importeDelMasCaro + '$' + '<br>' );
-	document.write('PORCENTAJE DE CADA LIBRO ES DE TERROR ' + porcentajeTerror + '%' + ' DE CIENCIA FICCION ES ' + porcentajeCienciaFiccion + '%' + ' DE DRAMA ES ' + porcentajeDrama + '%' +'<br>');
-	document.write('CANTIDAD DE LIBRO DE CIENCIA FICCION Y CUESTAN MENOS DE 700P ' + libroCficcionSetesientosP + '<br>' );
-
-}
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*********************************************************************************** 
-/*
-Ejercicio 1
-
-Ingresar el nombre de los 5 candidatos a presidente de CusCús,  
-la edad de cada uno y la cantidad de votos (no menor a cero)  que sacó en las elecciones.
-Informar: 
-el candidato con más votos
-el candidato con menos votos
-el promedio de edades de los candidatos
-total de votos emitidos.
-*/
-/************************************************************************************* */
-/*
-function mostrar()
-{
-	let nombre;
-	let edad;
-	let cantidadVotos;
-	let respuesta = 0;
-
-	let candidatoMasVotos = 0;
-	let nombreCandidatoMasVotos;
-	let nombreCandidatoMenosVotos;
-	let candidatoMenosVotos = 0;
-	let banderaMenosVotos = 0;
-	let banderaMasVotos = 0;
-
-	let promedioEdadTotal = 0;
-	let cantidadVotosTotal = 0;
-
-
-
-
-	while(respuesta<5){
-
-		nombre=prompt('INGRESE NOMBRE CANDIDATO');
-
-		edad=prompt('INGRESE EDAD');
-		edad=parseInt(edad);
-
-		cantidadVotos=prompt('INGRESE VOTOS');
-		cantidadVotos=parseInt(cantidadVotos);
-		while(cantidadVotos<1){
-			  cantidadVotos=prompt('ERROR');
-			  cantidadVotos=parseInt(cantidadVotos);
-		}
-
-		if(banderaMasVotos == 0 || cantidadVotos>candidatoMasVotos){
-		   candidatoMasVotos = cantidadVotos;
-		   nombreCandidatoMasVotos = nombre;
-		   banderaMasVotos = 1;
-		}
-
-		if(banderaMenosVotos == 0 || cantidadVotos<candidatoMenosVotos){
-		   candidatoMenosVotos = cantidadVotos;
-		   nombreCandidatoMenosVotos = nombre;
-		   banderaMenosVotos = 1;
-		}
-
-		if(edad>0){
-		   promedioEdadTotal = promedioEdadTotal + edad;
-		}
-
-		if(cantidadVotos>0){
-		   cantidadVotosTotal = cantidadVotosTotal + cantidadVotos;
-		}
-
-
-
-		respuesta= respuesta + 1;
-	}
-	cantidadVotosTotal = cantidadVotosTotal;
-	document.write('LA CANTIDAD DE VOTOS TOTAL SON ' + cantidadVotosTotal + '<br>');
-
-	promedioEdadTotal = promedioEdadTotal/5;
-	document.write('PROMEDIO EDAD TOTAL ES ' + promedioEdadTotal + '<br>');
-
-	document.write('EL CANDIDATO CON MAS VOTOS ES ' + nombreCandidatoMasVotos + ' CON VOTOS: ' + candidatoMasVotos + ' Y EL NOMBRE DEL CANDIDATO CON MENOS VOTOS ES ' + nombreCandidatoMenosVotos + ' CON VOTOS ' + candidatoMenosVotos +'<br>');
-
-
-
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/******************************************************************************
-ALUMNO: FERNANDO ROMERO MONTERO
-DIV : J
-
-3)
-
-Nos ingresan una cantidad indeterminada de estadías de vacaciones, 
-validando los datos ingresados:
-
-A.	Nombre de la empresa.
-B.	Lugar (Ushuaia, Merlo o Mendoza)
-C.	Temporada (Otoño, Invierno, Verano o Primavera)
-D.	Cantidad de personas que viajan (1 y 42)
-
-Informar:
-1.	El lugar mas elegido.
-2.	El nombre de la empresa que lleva menos pasajeros.
-3.	El promedio de personas por viaje que viajan en Primavera.
-
-Pedir datos por prompt y mostrar por document write o alert.
-
-
-*******************************************************************************/
-/*
-function mostrar()
-{
-	let nombre;
-	let lugar;
-	let temporada;
-	let cantidadPersonas;
-	let respuesta = true;
-	let contadorMendoza = 0;
-	let contadorMerlo = 0;
-	let contadorUshuaia = 0;
-	let menosPasajeros;
-	let banderaMenosPasajeros = 0;
-	let nombreMenosPasajeros;
-	let promedioPrimavera;
-	let personasPrimavera = 0;
-	let contadorPrimavera = 0;
-	let elLugarMasElegido;
-
-	while(respuesta == true){
-		
-		nombre=prompt('INGRESE EL NOMBRE DE LA EMPRESA');
-
-		lugar=prompt('INGRESE EL LUGAR');
-		while(lugar!="ushuaia" && lugar!="merlo" && lugar!= "mendoza"){
-			  lugar=prompt('ERROR, INGRESE LUGAR');
-
-		}
-
-		temporada=prompt('INGRESE TEMPORADA');
-		while(temporada!="otoño" && temporada!="invierno" && temporada!="primavera" && temporada!="verano"){
-			  temporada=prompt('ERROR, INGRESE TEMPORADA');
-		}
-
-		cantidadPersonas=prompt('INGRESE CANTIDAD DE PERSONAS');
-		cantidadPersonas=parseInt(cantidadPersonas);
-
-		while(cantidadPersonas<1 || cantidadPersonas>42){
-			  cantidadPersonas=prompt('ERROR, ENTRE 1 Y 42');
-			  cantidadPersonas=parseInt(cantidadPersonas);
-		}
-
-//1.	El lugar mas elegido.
-		switch(lugar){
-			   case "ushuaia":
-				contadorUshuaia = contadorUshuaia + 1;
-				break;
-			   case "merlo":
-				contadorMerlo = contadorMerlo + 1;
-				break;
-			   case "mendoza":
-				contadorMendoza = contadorMendoza + 1;
-				break;
-		}
-
-		if(contadorUshuaia>contadorMerlo && contadorUshuaia>contadorMendoza){
-		   elLugarMasElegido = lugar;
-		}
-		
-		if(contadorMerlo>contadorUshuaia && contadorMerlo>contadorMendoza){
-		   elLugarMasElegido = lugar;
-		}
-		
-			if(contadorMendoza>contadorUshuaia && contadorMendoza>contadorMerlo){
-				elLugarMasElegido = lugar;
-			 }	
-		
-	    
-		
-		
-	    
-		
-
-//2.	El nombre de la empresa que lleva menos pasajeros.
-		if(cantidadPersonas<menosPasajeros || banderaMenosPasajeros == 0){
-			menosPasajeros = cantidadPersonas;
-			nombreMenosPasajeros = nombre;
-			banderaMenosPasajeros = 1;
-		}
-
-//3.	El promedio de personas por viaje que viajan en Primavera.
-		if(temporada=="primavera"){
-		   personasPrimavera = personasPrimavera + cantidadPersonas;
-		   contadorPrimavera = contadorPrimavera + 1;
-		}
-
-
-
-		respuesta=confirm('QUIERE INGRESAR A OTRA PERSONA ??');
-	}
-	
-
-
-		promedioPrimavera = personasPrimavera/contadorPrimavera;
-
-		document.write('EL LUGAR MAS ELEGIDO ES ' + elLugarMasElegido + '<br>');
-		document.write('NOMBRE DE LA EMPRESA QUE LLEVA MENOS PASAJEROS ' + nombreMenosPasajeros + ' CON UN TOTAL DE ' + menosPasajeros + '<br>');
-		document.write('PROMEDIO DE PERSONAS QUE VIAJAN EN PRIMAVERA ' + promedioPrimavera + ' PERSONAS' + '<br>');
-}
-*/
 
 
 
