@@ -1,4 +1,6 @@
-3)Nos ingresan una cantidad indeterminada de ventas realizadas por las distintas sucursales de una Mega Tienda Polirubro, validando los datos ingresados:
+/*3)Nos ingresan una cantidad indeterminada de ventas realizadas
+por las distintas sucursales de una Mega Tienda Polirubro, 
+validando los datos ingresados:
 
             nombre del cliente, 
 
@@ -16,7 +18,107 @@ b)El promedio del monto de venta de las sucursales del tipo “PEQUEÑA”.
 
 c)La sucursal con mas cantidad de ventas.
 
-Pedir datos por prompt y mostrar por document.write
+Pedir datos por prompt y mostrar por document.write */
+
+function mostrar(){
+   let nombre;
+   let sucursal; 54
+   let tipo;
+   let monto;
+   let respuesta=true;
+
+   let nombreClienteMenos;
+   let montoMenor;
+   let banderaMonto = 0;
+
+   let montoSucursalPeque;
+   let acumuladorMontoSpeque = 0;
+   let promedioSucursalPeque;
+   let banderaSucursalPeque = 0;
+   let contadorSucursalPeque = 0;
+
+   let contadorMontoBs = 0;
+   let contadorMontoCaba = 0;
+   let contadorMontoInterior = 0;
+   let sucursalConMasVentas;
+
+
+   while(respuesta==true){
+      nombre=prompt('ingrese nombre');
+      sucursal=prompt('ingrese sucursal');
+      while(sucursal!='caba' && sucursal!='bs as' && sucursal!='interior'){
+         sucursal=prompt('error');
+      }
+      tipo=prompt('ingrese tipo');
+      while(tipo!='grande'  && tipo!='pequeña'  && tipo!='mediana'){
+         tipo=prompt('error');
+      }
+      monto=prompt('ingrese monto');
+      monto=parseInt(monto)
+      while(monto<0){
+         monto=prompt('error');
+         monto=parseInt(monto);
+      }
+      //a)El nombre del cliente al que se le vendió menos.
+      if(monto<montoMenor || banderaMonto==0){
+         montoMenor=monto;
+         nombreClienteMenos=nombre;
+         banderaMonto=1;
+      }
+      //b)El promedio del monto de venta de las sucursales del tipo “PEQUEÑA”.
+      if(tipo=='pequeña'){
+       
+           
+            acumuladorMontoSpeque=acumuladorMontoSpeque+monto;
+            contadorSucursalPeque=contadorSucursalPeque+1;
+            
+         
+      }
+      //c)La sucursal con mas cantidad de ventas.
+      switch(sucursal){
+         case 'bs as':
+            contadorMontoBs=contadorMontoBs+monto;
+            break;
+         case 'caba':
+            contadorMontoCaba=contadorMontoCaba+monto;
+            break;
+         case 'interior':
+            contadorMontoInterior=contadorMontoInterior+monto;
+            break;
+      }
+
+
+
+      respuesta=confirm('ottro clinente?');
+   }
+   if(contadorMontoBs>contadorMontoInterior && contadorMontoBs>contadorMontoCaba){
+      sucursalConMasVentas='BS AS'
+      
+   }
+   else{
+      if(contadorMontoCaba>contadorMontoBs && contadorMontoCaba>contadorMontoInterior){
+         sucursalConMasVentas='CABA';
+      }else{
+         if(contadorMontoInterior>contadorMontoCaba && contadorMontoInterior>contadorMontoBs){
+            sucursalConMasVentas='INTERIOR';
+         }
+      }
+   }
+      
+         
+      
+   
+   if(contadorSucursalPeque>0){
+   promedioSucursalPeque=acumuladorMontoSpeque/contadorSucursalPeque;
+   }
+   else{
+      promedioSucursalPeque=0;
+   }
+   document.write('a) el nombre del clientes al que se le vendio menos es ' + nombreClienteMenos + ' b) promedio de monto de la sucursal tipo pequeña es ' + promedioSucursalPeque + ' c) la sucursal con mas cantidad de ventas es ' + sucursalConMasVentas + '<br>');
+}
+
+
+
 /*
 buenas genteee
 Como me pidieron ayer, les hice un ejercicio para que puedan seguir practicando, pero con una dificultad un poco especial... 🙂
@@ -43,6 +145,7 @@ y cual de todos los magos con bonificación.
 e) Que porcentaje del total de personajes ingresados representa cada tipo de personaje.
 
 */
+/*
 function mostrar()
 {
    let respuesta = true;
