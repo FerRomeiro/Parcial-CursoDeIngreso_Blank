@@ -1,3 +1,724 @@
+ /* 
+Enunciado:
+Bienvenidos.
+Realizar el algoritmo que permita ingresar el nombre de un animal del zoológico, 
+el peso el cual debe ser entre 1 y 1000 y
+la temperatura del hábitat (entre -30 y 30) hasta que el usuario quiera e informar 
+al terminar el ingreso por document.write:
+a) La cantidad de temperaturas pares.
+b) El nombre y temperatura del animal más pesado
+c) La cantidad de animales que viven a menos de 0 grados.
+d) El promedio del peso de todos los animales.
+f) El peso máximo y el mínimo de todos los animales cuyas temperaturas sean bajo cero.
+
+*/
+//FIJARSE EJERCICIO F ESTA INTERESANTE Y TMB PREGUNTAR POR EL RESTO EL CALCULO VA DENTRO O FUERA DEL BUCLE ??
+function mostrar(){
+
+   let respuesta=true;
+   let nombre;
+   let peso;
+   let temperatura;
+
+   let contadorTPares=0;
+   let resto;
+
+   let nombreAnimalMasPesado;
+   let temperaturaAnimalMasPesado;
+   let masPesado;
+   let banderaAnimalMasPesado=0;
+
+   let contadorAnimalesVivenMenosT=0;
+
+   let acumuladorPesoAnimales=0;
+   let promedioPesoAnimales;
+   let contadorAnimales=0;
+   
+   let pesoMaximoAnimalTcero;
+   let pesoMinimoAnimalTCero;
+   let banderaPesoMaxMinTCero=0;
+
+
+
+   
+
+   while(respuesta==true){
+      nombre=prompt('ingrese nombre animal');
+      peso=prompt('ingrese peso animal');
+      peso=parseInt(peso);
+      while(peso<1 || peso>1000){
+         peso=prompt('error');
+         peso=parseInt(peso);
+      }
+      temperatura=prompt('ingrese temperatura habitat');
+      temperatura=parseInt(temperatura);
+      while(temperatura<-30 || temperatura>30){
+         temperatura=prompt('error');
+         temperatura=parseInt(temperatura);
+      }
+
+      //a) La cantidad de temperaturas pares.
+      resto=(temperatura%2); //ESTA BIEN HACER EL CALCULO ACA ??? 
+      if(resto==0){
+         contadorTPares=contadorTPares+1;
+      }
+      //b) El nombre y temperatura del animal más pesado
+      if(peso>masPesado || banderaAnimalMasPesado==0 ){
+         masPesado=peso;
+         nombreAnimalMasPesado=nombre;
+         temperaturaAnimalMasPesado=temperatura;
+         banderaAnimalMasPesado=1;
+      }
+      //c) La cantidad de animales que viven a menos de 0 grados.
+      if(temperatura<0){
+         contadorAnimalesVivenMenosT=contadorAnimalesVivenMenosT+1;
+      }
+      //d) El promedio del peso de todos los animales.
+      acumuladorPesoAnimales=acumuladorPesoAnimales+peso;
+      contadorAnimales=contadorAnimales+1;
+      //f) El peso máximo y el mínimo de todos los animales cuyas temperaturas sean bajo cero.
+      if(peso>pesoMaximoAnimalTcero && temperatura<0 || banderaPesoMaxMinTCero==0){
+         pesoMaximoAnimalTcero=peso;
+      }
+      if(peso<pesoMinimoAnimalTCero && temperatura<0 || banderaPesoMaxMinTCero==0){
+         pesoMinimoAnimalTCero=peso;
+         banderaPesoMaxMinTCero=1;
+      }
+      
+      respuesta=confirm('otro animal?');
+   }
+      promedioPesoAnimales=(acumuladorPesoAnimales/contadorAnimales);
+
+      mensaje='a)cantidad de temperaturas pares: ' + contadorTPares+'<br>'+
+      'b)nombre y temperatura animal mas pesado: ' + nombreAnimalMasPesado + ' ' + temperaturaAnimalMasPesado+'<br>'
+      +'c)cantidad animales viven menos 0 grados: ' + contadorAnimalesVivenMenosT+'<br>'+
+      'd)promedio peso todos animales: ' + promedioPesoAnimales + '<br>'+
+      'f) peso maximo y minimo de animales viven bajo cero : peso maximo ' + pesoMaximoAnimalTcero + ' peso minimo: ' + pesoMinimoAnimalTCero;
+
+      document.write(mensaje);
+}
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ /* En el ingreso a un viaje en avion nos solicitan nombre , edad, sexo("f" o "m") 
+ y estado civil("soltero", "casado" o "viudo")y temperatura corporal.
+a) El nombre de la persona con mas temperatura.
+b) Cuantos mayores de edad estan viudos
+c) La cantidad de hombres que hay solteros o viudos.
+d) cuantas personas de la tercera edad( mas de 60 años) , t
+ienen mas de 38 de temperatura
+e) El promedio de edad entre los hombres solteros.
+*/
+/*
+ function mostrar(){
+
+   let respuesta=true;
+   let nombre;
+   let sexo;
+   let edad;
+   let estadoCivil;
+   let temperaturaCorporal;
+
+   let nombrePersonaConMasTemperatura;
+   let mayorTemperatura;
+   let banderaMayorT=0;
+
+   let cantidadHSolterosOViudos=0;
+
+   let contadorMayoresEdadViudos= 0;
+
+   let contadorPersonasTerceraEdad=0;
+   
+   let promedioEdadHSolteros;
+   let contadorHSolteros=0;
+   let acumuladorEdadHSolteros=0;
+
+   let mensaje;
+
+   while(respuesta==true){
+
+      nombre=prompt('ingrese nombre');
+      edad=prompt('ingrese edad');
+      sexo=prompt('ingrese sexo');
+      while(sexo!='f' && sexo!='m'){
+         sexo=prompt('error');
+      }
+      estadoCivil=prompt('ingrese estado civil');
+      while(estadoCivil!='soltero' && estadoCivil!='casado' && estadoCivil!='viudo'){
+         estadoCivil=prompt('error')
+      }
+      temperaturaCorporal=prompt('ingrese temperatura corporal');
+      temperaturaCorporal=parseInt(temperaturaCorporal);
+
+      //a) El nombre de la persona con mas temperatura.
+      if(temperaturaCorporal>mayorTemperatura || banderaMayorT == 0){
+         mayorTemperatura=temperaturaCorporal;
+         nombrePersonaConMasTemperatura=nombre;
+         banderaMayorT=1;
+      }
+
+      //b) Cuantos mayores de edad estan viudos
+      if(estadoCivil=='viudo' && edad>18){
+         contadorMayoresEdadViudos=contadorMayoresEdadViudos+1;
+      }
+      //c) La cantidad de hombres que hay solteros o viudos.
+      if(estadoCivil=='soltero' || estadoCivil=='viudo' && sexo=='m'){
+         cantidadHSolterosOViudos=cantidadHSolterosOViudos+1;
+      }
+      //d) cuantas personas de la tercera edad( mas de 60 años) , tienen mas de 38 de temperatura
+      if(edad>60 && temperaturaCorporal>38){
+         contadorPersonasTerceraEdad=contadorPersonasTerceraEdad+1;
+      }   
+      //e) El promedio de edad entre los hombres solteros.
+      if(estadoCivil=='soltero' && sexo=='m'){
+         acumuladorEdadHSolteros=acumuladorEdadHSolteros+edad;
+         contadorHSolteros=contadorHSolteros+1;
+      }
+
+
+         respuesta=confirm('otro pasajero?');
+   }
+   if(contadorHSolteros>0){
+   promedioEdadHSolteros=(acumuladorEdadHSolteros/contadorHSolteros);
+   }
+   else
+   {
+      promedioEdadHSolteros='no hay hombres solteros';
+   }
+
+   mensaje='a)nombre de la persona con mas temperatura: ' + nombrePersonaConMasTemperatura+'<br>'+
+   'b)viudos mayores de edad son: ' + contadorMayoresEdadViudos +'<br>'+
+   'c)cantidad hombres solteros o viudos: ' + cantidadHSolterosOViudos+'<br>'+
+   'd)personas tercera edad con tc de mas de 38: ' + contadorPersonasTerceraEdad+'<br>'
+   +'e)promedio edad de hombres solteros: ' + promedioEdadHSolteros; 
+
+   document.write(mensaje);
+ }
+ */
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+ /* Realizar el algoritmo que permita el ingreso por prompt de las alturas 
+ en centimetros(validar entre 0 y 250) , el sexo. (validar el sexo “f” o “m”) 
+ de 5 jugadores de básquet, informar por alert:
+a) El promedio de las alturas totales.
+b) La altura más baja y el sexo de esa persona.
+c) La cantidad de muheres que su altura supere los 190 centimetros.
+*/
+/*
+function mostrar(){
+   let contadorJugadores=0;
+   let altura;
+   let sexo;
+
+   let promedioAlturasTotales;
+   let acumuladorAlturas=0;
+
+   let alturaMasBaja;
+   let sexoAlturaMasBaja;
+
+   let cantidadMujeresSuperanMetroNoventa=0;
+   let mensaje;
+  
+
+
+   while(contadorJugadores<5){
+
+      altura=prompt('ingrese altura');
+      altura=parseInt(altura);
+      while(altura<0 ||  altura>100){
+         altura=prompt('error');
+         altura=parseInt(altura);
+      }  
+      sexo=prompt('ingrese sexo');
+      while(sexo!='f' && sexo!='m'){
+         sexo=prompt('ingrese sexo');
+      } 
+
+
+   //a) El promedio de las alturas totales.
+      acumuladorAlturas=acumuladorAlturas+altura;
+
+   //b) La altura más baja y el sexo de esa persona.
+      if(altura<alturaMasBaja || contadorJugadores==0){
+         alturaMasBaja=altura;
+         sexoAlturaMasBaja=sexo;
+      }
+
+   //c) La cantidad de muheres que su altura supere los 190 centimetros.
+      if(altura>190 && sexo=='f'){
+         cantidadMujeresSuperanMetroNoventa=cantidadMujeresSuperanMetroNoventa+1;
+      }
+
+      contadorJugadores=contadorJugadores+1;
+   }
+   promedioAlturasTotales=acumuladorAlturas/contadorJugadores;
+
+   mensaje='a) promedio alturas totales: ' + promedioAlturasTotales+'<br>'
+   +'b)la altura mas baja y sexo es: ' + alturaMasBaja + ' ' + sexoAlturaMasBaja+'<br>'+
+   'c) cantidad de mujeres q superan el metro noventa: ' + cantidadMujeresSuperanMetroNoventa;
+
+   document.write(mensaje);
+
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Enunciado:
+Bienvenidos.
+Se deben ingresar los datos de una carrera de motos:
+- Nombre y número del competidor
+- Marca de la moto (honda, yamaha, suzuki)
+- Edad (mayor de 18)
+- Tiempo en vuelta 1, 2, 3
+- Posición en carrera
+- Cilindrada 
+
+1) Informar el número del competidor más rápido en promedio
+2) Cuántas motos honda llegaron entre los primeros 10
+3) Promedio total por vuelta de los competidores
+4) Promedio de las motos cilindrada 200
+
+
+contadorCilidradaHodna
+contadorCilidradayamaha
+contadorCilidradasuzuki
+*/
+/*
+function mostrar(){
+   let respuesta=true;
+   let nombre;
+   let numeroCompetidor;
+   let MarcaMoto;
+   let edad;
+   let tiempoVueltaPrimero;
+   let tiempoVueltaSegundo;
+   let tiempoVueltaTercero;
+   let posicionCarrera;
+   let cilindrada;
+
+   let numeroCompetidorMasRapido;
+   let sumaVueltas;
+   let sumaVueltasMasrapida;
+   let banderaCompetidorMasRapido=0;
+
+   let contadorCompetidores=0;
+   let sumaVueltaUno;
+   let sumaVueltaDos;
+   let sumaVueltaTres;
+   let promedioVueltaUno;
+   let promedioVueltaDos;
+   let promedioVueltaTres;
+
+   let contadorMotosCilindrada=0;
+   let promedioMotosCilindrada;
+
+   let contadorMotosHonda=0;
+   
+
+   while(respuesta==true){
+      nombre=prompt('ingrese nombre');
+      numeroCompetidor=prompt('ingrese numero');
+      MarcaMoto=prompt('ingrese marca de moto');
+      while(MarcaMoto!='honda' && MarcaMoto!='yamaha' && MarcaMoto!='suzuki'){
+         MarcaMoto=prompt('error');
+      }
+      edad=prompt('ingrese edad');
+      edad=parseInt(edad);
+      while(edad<18){
+         edad=prompt('error');
+         edad=parseInt(edad);
+      }
+      
+      tiempoVueltaPrimero=prompt('ingrese primer tiempo vuelta');
+      tiempoVueltaPrimero=parseInt(tiempoVueltaPrimero);
+      while(tiempoVueltaPrimero<0 || tiempoVueltaPrimero>10){
+         tiempoVueltaPrimero=prompt('error');
+         tiempoVueltaPrimero=parseInt(tiempoVueltaPrimero);
+      }
+
+      tiempoVueltaSegundo=prompt('ingrese tiempo de vuelta esgundo');
+      tiempoVueltaSegundo=parseInt(tiempoVueltaSegundo);
+      while(tiempoVueltaSegundo<0 || tiempoVueltaSegundo>10){
+         tiempoVueltaSegundo=prompt('error');
+         tiempoVueltaSegundo=parseInt(tiempoVueltaSegundo);
+      }
+
+      tiempoVueltaTercero=prompt('ingrese tiempo tercera vuelta');
+      tiempoVueltaTercero=parseInt(tiempoVueltaTercero);
+      while(tiempoVueltaTercero<0 || tiempoVueltaTercero>10){
+         tiempoVueltaTercero=prompt('error');
+         tiempoVueltaTercero=parseInt(tiempoVueltaTercero);
+      }
+
+
+      posicionCarrera=prompt('ingrese posicion de carrera');
+      cilindrada=prompt('ingrese cilindrada');
+
+
+      //1) Informar el número del competidor más rápido en promedio
+      sumaVueltas=(tiempoVueltaPrimero+tiempoVueltaSegundo+tiempoVueltaTercero);
+      if(sumaVueltas<sumaVueltasMasrapida || banderaCompetidorMasRapido==0){
+         sumaVueltasMasrapida=sumaVueltas;
+         numeroCompetidorMasRapido=numeroCompetidor;
+         banderaCompetidorMasRapido=1;
+      }
+
+      //2) Cuántas motos honda llegaron entre los primeros 10
+      if(MarcaMoto='honda' && posicionCarrera<11){
+         contadorMotosHonda=contadorMotosHonda+1;
+      }
+      //3) Promedio total por vuelta de los competidores
+      contadorCompetidores=contadorCompetidores+1;
+      sumaVueltaUno=sumaVueltaUno+tiempoVueltaPrimero;
+      sumaVueltaDos=sumaVueltaDos+tiempoVueltaSegundo;
+      sumaVueltaTres=sumaVueltaTres+tiempoVueltaTercero;
+      //4) Promedio de las motos cilindrada 200
+      if(cilindrada==200){
+         contadorMotosCilindrada=contadorMotosCilindrada+1;
+      }
+      respuesta=confirm('otro dato?');
+   }
+
+   promedioVueltaUno=(sumaVueltaUno/contadorCompetidores);
+   promedioVueltaDos=(sumaVueltaDos/contadorCompetidores);
+   promedioVueltaTres=(sumaVueltaTres/contadorCompetidores);
+
+   if(contadorMotosCilindrada>0){
+   promedioMotosCilindrada=(contadorCompetidores/contadorMotosCilindrada);
+   }
+   else{
+      promedioMotosCilindrada='NINGUNA MOTO ES CILINDRADA 200';
+   }
+
+   mensaje='a)numero competidor mas rapido: ' + numeroCompetidorMasRapido + '<br>'
+   + 'b) cantidad de motos honda entre los 10 primeros: ' + contadorMotosHonda + '<br>'+
+   'c) promedio por vuelta 1,2 y 3 de los competidores: primera vuelta: '+ promedioVueltaUno
+   + ' segunda vuelta: ' + promedioVueltaDos + ' tercera vuelta: ' +promedioVueltaTres+'<br>'+
+   'd) promedio motos cilindrada 200: ' + promedioMotosCilindrada;
+
+
+   document.write(mensaje);
+}
+
+*/
+
+
+
+
+
+
+/*Se debe ingresar alumnos hasta que el usuario quiera:
+Cada alumno cuenta con nota del primer y segundo cuatrimestre (0 a 10)
+número de comisión (1000 a 2000)
+nombre, apellido, materia (programacion, matematica, ingles).
+
+1) Notas promedio primer y segundo cuatrimestre
+2) Nombre, apellido y comisión del alumno con menor nota primer cuatrimestre
+3) Materia con mayor número de promocionados (se promociona con 6)
+
+3 5 8 10
+30*/
+/*
+function mostrar(){
+   let respuesta=true;
+   let notaPrimero;
+   let notaSegundo;
+   let comision;
+   let nombre;
+   let apellido;
+   let materia;
+
+   let contadorNotaPrimero=0;
+   let contadorNotaSegundo=0;
+   let promedioPrimero;
+   let promedioSegundo;
+   let acumuladorNotasPrimer=0;
+   let acumuladorNotasSegundo=0;
+
+   let nombreNotaMasBajaPrimero;
+   let notaMasBajaPrimero;
+   let apellidoNotaMasBajaPrimero;
+   let banderaNotaMasBajaPrimero=0;
+   let comisionNotaMasBajaPrimero;
+
+   
+   let promedioNotas;
+   let contadorPromocionadosI=0;
+   let contadorPromocionadosM=0;
+   let contadorPromocionadosP=0;
+   let materiaConMasPromocionados;
+
+
+
+
+   while(respuesta==true){
+      nombre=prompt('ingrese nombre');
+      apellido=prompt('ingrese apellido');
+      materia=prompt('ingrese materia');
+      while(materia!='programacion' && materia!='matematica' && materia!='ingles'){
+            materia=prompt('error');
+      }
+
+      notaPrimero=prompt('ingrese nota');
+      notaPrimero=parseInt(notaPrimero);
+      while(notaPrimero<0 || notaPrimero>10){
+         notaPrimero=prompt('error');
+         notaPrimero=parseInt(notaPrimero);
+      }
+
+      notaSegundo=prompt('ingrese nota');
+      notaSegundo=parseInt(notaSegundo);
+      while(notaSegundo<0 || notaSegundo>10){
+         notaSegundo=prompt('error');
+         notaSegundo=parseInt(notaSegundo);
+      }
+
+      comision=prompt('ingrese comision');
+      comision=parseInt(comision);
+      while(comision<1000 ||  comision>2000){
+         comision=prompt('error');
+         comision=parseInt(comision);
+      }
+
+      //1) Notas promedio primer y segundo cuatrimestre
+      acumuladorNotasPrimer=acumuladorNotasPrimer+notaPrimero;
+      acumuladorNotasSegundo=acumuladorNotasSegundo+notaSegundo;
+      contadorNotaPrimero=contadorNotaPrimero+1;
+      contadorNotaSegundo=contadorNotaSegundo+1;
+      //2) Nombre, apellido y comisión del alumno con menor nota primer cuatrimestre
+      if(notaPrimero<notaMasBajaPrimero || banderaNotaMasBajaPrimero==0){
+         notaMasBajaPrimero=notaPrimero;
+         nombreNotaMasBajaPrimero=nombre;
+         apellidoNotaMasBajaPrimero=apellido;
+         comisionNotaMasBajaPrimero=comision;
+         banderaNotaMasBajaPrimero=1;
+      }
+      //3) Materia con mayor número de promocionados (se promociona con 6)
+
+      //OBSERVACION PUNTO INTERESANTE LEER
+
+      promedioNotas=(notaPrimero+notaSegundo)/2;
+      if(promedioNotas>5){
+         switch(materia){
+            case 'ingles':
+                  contadorPromocionadosI=contadorPromocionadosI+1;
+               break;
+            case 'matematica':  
+                  contadorPromocionadosM=contadorPromocionadosM+1;
+               break;
+            case 'programacion':
+                  contadorPromocionadosP=contadorPromocionadosP+1;
+               break;
+   
+         }
+      }
+
+      respuesta=confirm('otro?');
+   }
+
+   if(contadorPromocionadosI>contadorPromocionadosM && contadorPromocionadosI>contadorPromocionadosP){
+      materiaConMasPromocionados='INGLES';
+   }
+   else
+   {
+      if(contadorPromocionadosM>contadorPromocionadosI && contadorPromocionadosM>contadorPromocionadosP){
+         materiaConMasPromocionados='MATEMATICA';
+      }
+      else
+      {
+         if(contadorPromocionadosP>contadorPromocionadosI && contadorPromocionadosP>contadorPromocionadosM){
+            materiaConMasPromocionados='PROGRAMACION';
+         }
+         else
+         {
+            materiaConMasPromocionados='NINGUNA PROMOCION';
+         }
+      }
+   }
+
+   promedioPrimero=(acumuladorNotasPrimer/contadorNotaPrimero);
+   promedioSegundo=(acumuladorNotasSegundo/contadorNotaSegundo);
+
+   mensaje='a) promedio notas primer cuatri: ' + promedioPrimero + ' promedio notas segundo cuatri ' + promedioSegundo+'<br>'
+   +'b) nombre apellido comision alumno peor nota primer cuatri: ' + nombreNotaMasBajaPrimero + apellidoNotaMasBajaPrimero +comisionNotaMasBajaPrimero+'<br>'+
+   'c) materia con mas promociados ' +materiaConMasPromocionados; 
+
+   document.write(mensaje);
+}
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+/** Realizar el algoritmo que permita ingresar el nombre de un país,
+ *  cantidad de habitantes en millones entre 1 y 7000 (validar)
+la temperaruta mínima que se registra en su territorio(entre -50 y 50)
+ hasta que el usuario quiera e informar al terminar el ingreso por document.write:
+a) La cantidad de temperaturas pares.
+b) El nombre del pais con menos habitantes
+c) la cantidad de paises que superan los 40 grados.
+d) el promedio de habitantes entre los paises ingresados
+f) la temperatura mínima ingresada, y nombre del pais que registro esa temperatura.
+*/
+/*
+function mostrar(){
+
+      let respuesta=true;
+      let nombrePais;
+      let cantidadH;
+      let temperatura;
+
+      let contadorTemperaturasPares=0;
+      let resto;
+      let contadorTemperaturasImpares=0;
+
+      let cantidadPaisMenosH;
+      let nombrePaisMenosH;
+      let banderaMenosH=0;
+
+      let contadorPaisesSuperanCuarenta=0;
+
+      let promedioH;
+      let contadorPaises=0;
+      let acumuladorH=0;
+
+      let banderaTMinimaIngresada=0;
+      let temperaturaMinimaIngresada;
+      let nombrePaisTemperaturaMinima;
+
+      let mensaje;
+      
+
+   while(respuesta==true){
+      
+      nombrePais=prompt('ingrese nombre pais');
+      cantidadH=prompt('ingrese cantidad habitantes');
+      cantidadH=parseInt(cantidadH);
+      while(cantidadH<0 && cantidadH>700_000_000){
+         cantidadH=prompt('error');
+         cantidadH=parseInt(cantidadH);
+      }
+      temperatura=prompt('ingrese temperatura');
+      temperatura=parseInt(temperatura);
+      while(temperatura<-50 && temperatura>50){
+         temperatura=prompt('error');
+         temperatura=parseInt(temperatura);
+      }
+      //a) La cantidad de temperaturas pares.      
+      resto=(temperatura%2);
+      if(resto==0){
+         contadorTemperaturasPares=contadorTemperaturasPares+1;
+      }
+      else{
+         contadorTemperaturasImpares=contadorTemperaturasImpares+1;
+      }
+      //b) El nombre del pais con menos habitantes
+      if(cantidadH<cantidadPaisMenosH || banderaMenosH == 0){
+         cantidadPaisMenosH=cantidadH;
+         nombrePaisMenosH=nombrePais;
+         banderaMenosH=1;
+      }
+      //c) la cantidad de paises que superan los 40 grados.
+      if(temperatura>40){
+         contadorPaisesSuperanCuarenta=contadorPaisesSuperanCuarenta+1;
+      }
+      //d) el promedio de habitantes entre los paises ingresados
+      contadorPaises=contadorPaises+1;
+      acumuladorH=acumuladorH+cantidadH;
+      //f) la temperatura mínima ingresada, y nombre del pais que registro 
+      //esa temperatura.
+      if(temperatura<temperaturaMinimaIngresada || banderaTMinimaIngresada == 0){
+         temperaturaMinimaIngresada=temperatura;
+         nombrePaisTemperaturaMinima=nombrePais;
+         banderaTMinimaIngresada=1;
+      }
+
+
+      respuesta=confirm('otro habitante?');
+   }  
+
+      promedioH=(acumuladorH/contadorPaises);
+
+      mensaje='A)pares: ' + contadorTemperaturasPares + ' impares: ' + contadorTemperaturasImpares + '<br>'
+      + 'b) ' + nombrePaisMenosH + ' numero habitantes: ' + cantidadPaisMenosH + '<br>' +
+      ' c) ' + contadorPaisesSuperanCuarenta + '<br>' + 
+       ' d) ' + promedioH + '<br>'+
+       'f) pais con temperatura minima ingresada  ' + nombrePaisTemperaturaMinima + ' con ' + temperaturaMinimaIngresada;
+
+      document.write(mensaje);
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 Ramirez Mariano / division D
 
@@ -19,6 +740,8 @@ Mostrar:
 a. Importe total de ventas, cantidad de ventas y comision. (Por cada vendedor)
 b. El nombre del vendedor que mas dinero recaudo en comisiones
 */
+
+/*
 function mostrar (){
 
 
@@ -133,7 +856,7 @@ function mostrar (){
 
 
    }
-
+*/
 
 
 
